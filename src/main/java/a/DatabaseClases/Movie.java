@@ -3,6 +3,7 @@ package a.DatabaseClases;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 
 @Entity
@@ -28,9 +32,25 @@ public class Movie {
 	@ManyToOne
 	private Director director;
 	
-	@ManyToMany(mappedBy="movies")
+	@ManyToMany(cascade={CascadeType.ALL})
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Collection<Type> types = new ArrayList<Type>();
-
+	
+	public Movie(){}
+	public Movie(String name, int yearOfProduction, Director director) {
+		
+		this.name = name;
+		this.yearOfProduction = yearOfProduction;
+		this.director = director;
+	
+	}
+	
+	public int getYearOfProduction() {
+		return yearOfProduction;
+	}
+	public void setYearOfProduction(int yearOfProduction) {
+		this.yearOfProduction = yearOfProduction;
+	}
 	public int getId() {
 		return id;
 	}

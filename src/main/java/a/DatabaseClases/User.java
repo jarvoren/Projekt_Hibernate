@@ -10,33 +10,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-
 
 @Entity
 @Table
-public class Type {
+public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@Column
+	private String login;
 	
 	@Column
-	private String name;
+	private String password;
 	
-	@ManyToMany(mappedBy="types",cascade={CascadeType.ALL})
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Collection<Movie> movies = new ArrayList<Movie>();
-
 	
-	public Type(String name) {
+	public User(String login, String password)
+	{
 		
-		this.name = name;
+		this.login=login;
+		this.password=password;
 	}
-
 	public int getId() {
 		return id;
 	}
@@ -45,12 +40,6 @@ public class Type {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	
 }

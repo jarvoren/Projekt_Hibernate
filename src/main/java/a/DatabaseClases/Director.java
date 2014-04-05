@@ -3,11 +3,13 @@ package a.DatabaseClases;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,9 +25,20 @@ public class Director {
 	@Column
 	private String surname;
 	
-	@OneToMany(mappedBy="director")
-	private Collection<Director> directors = new ArrayList<Director>();
+	@OneToMany(cascade={CascadeType.ALL})
+	@JoinColumn(name="MOVIE_ID")
+	private Collection<Movie> movies = new ArrayList<Movie>();
 
+	public Director(){}
+	
+	
+
+	public Director(String name, String surname)
+	{
+		
+		this.name=name;
+		this.surname=surname;
+	}
 	public int getId() {
 		return id;
 	}
